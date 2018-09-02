@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs">
+<head>
+<title>File:Poisson distribution PMF.png - Church Wiki</title>
+<meta charset="UTF-8" />
+<meta name="generator" content="MediaWiki 1.19.8" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="/church/w/opensearch_desc.php" title="Church Wiki (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="http://projects.csail.mit.edu/church/w/api.php?action=rsd" />
+<link rel="alternate" type="application/atom+xml" title="Church Wiki Atom feed" href="/church/w/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="http://projects.csail.mit.edu/church/w/load.php?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.monobook&amp;only=styles&amp;skin=monobook&amp;*" />
+<!--[if IE 6]><link rel="stylesheet" href="/church/w/skins/monobook/IE60Fixes.css?303" media="screen" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" href="/church/w/skins/monobook/IE70Fixes.css?303" media="screen" /><![endif]--><meta name="ResourceLoaderDynamicStyles" content="" />
+<link rel="stylesheet" href="http://projects.csail.mit.edu/church/w/load.php?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=monobook&amp;*" />
+<style>a:lang(ar),a:lang(ckb),a:lang(fa),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}a.new,#quickbar a.new{color:#ba0000}
+
+/* cache key: church:resourceloader:filter:minify-css:7:c88e2bcd56513749bec09a7e29cb3ffa */
+</style>
+
+<script src="http://projects.csail.mit.edu/church/w/load.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=monobook&amp;*"></script>
+<script>if(window.mw){
+mw.config.set({"wgCanonicalNamespace":"File","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":6,"wgPageName":"File:Poisson_distribution_PMF.png","wgTitle":"Poisson distribution PMF.png","wgCurRevisionId":693,"wgArticleId":49,"wgIsArticle":true,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgRelevantPageName":"File:Poisson_distribution_PMF.png","wgRestrictionEdit":[],"wgRestrictionMove":[],"wgRestrictionUpload":[]});
+}</script><script>if(window.mw){
+mw.loader.implement("user.options",function($){mw.user.options.set({"ccmeonemails":0,"cols":80,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":5,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"monobook","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":
+0,"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false});;},{},{});mw.loader.implement("user.tokens",function($){mw.user.tokens.set({"editToken":"+\\","watchToken":false});;},{},{});
+
+/* cache key: church:resourceloader:filter:minify-js:7:74a832f2292f1f4d40d425d223444e78 */
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","mediawiki.legacy.ajax"]);
+}</script>
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-6 ns-subject page-File_Poisson_distribution_PMF_png skin-monobook action-view">
+<div id="globalWrapper">
+<div id="column-content"><div id="content">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading"><span dir="auto">File:Poisson distribution PMF.png</span></h1>
+	<div id="bodyContent" class="mw-body">
+		<div id="siteSub">From Church Wiki</div>
+		<div id="contentSub"></div>
+		<div id="jump-to-nav" class="mw-jump">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>
+		<!-- start content -->
+<div id="mw-content-text"><ul id="filetoc"><li><a href="#file">File</a></li>
+<li><a href="#filehistory">File history</a></li>
+<li><a href="#filelinks">File usage</a></li></ul><div class="fullImageLink" id="file"><a href="/church/w/images/c/c1/Poisson_distribution_PMF.png"><img alt="File:Poisson distribution PMF.png" src="/church/w/images/thumb/c/c1/Poisson_distribution_PMF.png/800px-Poisson_distribution_PMF.png" width="800" height="600" /></a><div class="mw-filepage-resolutioninfo">Size of this preview: <a href="/church/w/images/thumb/c/c1/Poisson_distribution_PMF.png/800px-Poisson_distribution_PMF.png" class="mw-thumbnail-link">800 × 600 pixels</a>.</div></div>
+<div class="fullMedia"><a href="/church/w/images/c/c1/Poisson_distribution_PMF.png" class="internal" title="Poisson distribution PMF.png">Full resolution</a>‎ <span class="fileInfo">(1,300 × 975 pixels, file size: 153 KB, MIME type: image/png)</span>
+</div>
+<div id="mw-imagepage-content" lang="en" dir="ltr" class="mw-content-ltr">
+<!-- 
+NewPP limit report
+Preprocessor node count: 0/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key church:pcache:idhash:49-0!*!*!*!*!*!* and timestamp 20160404052917 -->
+</div><h2 id="filehistory">File history</h2>
+<div id="mw-imagepage-section-filehistory">
+<p>Click on a date/time to view the file as it appeared at that time.
+</p>
+<table class="wikitable filehistory">
+<tr><td></td><th>Date/Time</th><th>Thumbnail</th><th>Dimensions</th><th>User</th><th>Comment</th></tr>
+<tr><td>current</td><td class='filehistory-selected' style='white-space: nowrap;'><a href="/church/w/images/c/c1/Poisson_distribution_PMF.png">19:06, 18 October 2009</a></td><td><a href="/church/w/images/c/c1/Poisson_distribution_PMF.png"><img alt="Thumbnail for version as of 19:06, 18 October 2009" src="/church/w/images/thumb/c/c1/Poisson_distribution_PMF.png/120px-Poisson_distribution_PMF.png" width="120" height="90" /></a></td><td>1,300 × 975 <span style="white-space: nowrap;">(153 KB)</span></td><td><a href="/church/w/index.php?title=User:Timothy_J._O%27Donnell&amp;action=edit&amp;redlink=1" class="new mw-userlink" title="User:Timothy J. O'Donnell (page does not exist)">Timothy J. O'Donnell</a> <span style="white-space: nowrap;"> <span class="mw-usertoollinks">(<a href="/church/w/index.php?title=User_talk:Timothy_J._O%27Donnell&amp;action=edit&amp;redlink=1" class="new" title="User talk:Timothy J. O'Donnell (page does not exist)">Talk</a> | <a href="/church/wiki/Special:Contributions/Timothy_J._O%27Donnell" title="Special:Contributions/Timothy J. O'Donnell">contribs</a>)</span></span></td><td dir="ltr"></td></tr>
+</table>
+
+</div>
+<br /><ul>
+<li id="mw-imagepage-edit-external"><a href="/church/w/index.php?title=File:Poisson_distribution_PMF.png&amp;action=edit&amp;externaledit=true&amp;mode=file" title="File:Poisson distribution PMF.png">Edit this file using an external application</a> <small>(See the <a rel="nofollow" class="external text" href="//www.mediawiki.org/wiki/Manual:External_editors">setup instructions</a> for more information)</small></li>
+</ul>
+<h2 id="filelinks">File usage</h2>
+<div id='mw-imagepage-section-linkstoimage'>
+<p>The following 2 pages link to this file:
+</p><ul class="mw-imagepage-linkstoimage">
+<li id="mw-imagepage-linkstoimage-ns0"><a href="/church/wiki/Computational_Phonology" title="Computational Phonology">Computational Phonology</a></li>
+<li id="mw-imagepage-linkstoimage-ns0"><a href="/church/wiki/Models_with_Unbounded_Complexity" title="Models with Unbounded Complexity">Models with Unbounded Complexity</a></li>
+</ul>
+</div>
+</div><div class="printfooter">
+Retrieved from "<a href="http://projects.csail.mit.edu/church/w/index.php?title=File:Poisson_distribution_PMF.png&amp;oldid=693">http://projects.csail.mit.edu/church/w/index.php?title=File:Poisson_distribution_PMF.png&amp;oldid=693</a>"</div>
+		<div id='catlinks' class='catlinks catlinks-allhidden'></div>		<!-- end content -->
+				<div class="visualClear"></div>
+	</div>
+</div></div>
+<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+				<li id="ca-nstab-image" class="selected"><a href="/church/wiki/File:Poisson_distribution_PMF.png" primary="1" context="subject" title="View the file page [c]" accesskey="c">File</a></li>
+				<li id="ca-talk" class="new"><a href="/church/w/index.php?title=File_talk:Poisson_distribution_PMF.png&amp;action=edit&amp;redlink=1" primary="1" context="talk" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				<li id="ca-viewsource"><a href="/church/w/index.php?title=File:Poisson_distribution_PMF.png&amp;action=edit" primary="1" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li>
+				<li id="ca-history"><a href="/church/w/index.php?title=File:Poisson_distribution_PMF.png&amp;action=history" rel="archives" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="/church/w/index.php?title=Special:UserLogin&amp;returnto=File%3APoisson+distribution+PMF.png" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+<a href="/church/wiki/Church" style="background-image: url(/church/w/images/churchbayes_divot.png);" title="Visit the main page"></a>
+	</div>
+	<div class="generated-sidebar portlet" id="p-navigation">
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage"><a href="/church/wiki/Church" title="Visit the main page [z]" accesskey="z">Church</a></li>
+				<li id="n-recentchanges"><a href="/church/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-randompage"><a href="/church/wiki/Special:Random" title="Load a random page [x]" accesskey="x">Random page</a></li>
+				<li id="n-help"><a href="/church/wiki/Help:Contents" title="The place to find out">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="/church/w/index.php" id="searchform">
+				<input type='hidden' name="title" value="Special:Search"/>
+				<input type="search" name="search" title="Search Church Wiki [f]" accesskey="f" id="searchInput" />
+				<input type="submit" name="go" value="Go" title="Go to a page with this exact name if exists" id="searchGoButton" class="searchButton" />&#160;
+				<input type="submit" name="fulltext" value="Search" title="Search the pages for this text" id="mw-searchButton" class="searchButton" />
+			</form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="/church/wiki/Special:WhatLinksHere/File:Poisson_distribution_PMF.png" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="/church/wiki/Special:RecentChangesLinked/File:Poisson_distribution_PMF.png" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+				<li id="t-specialpages"><a href="/church/wiki/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li><a href="/church/w/index.php?title=File:Poisson_distribution_PMF.png&amp;printable=yes" rel="alternate">Printable version</a></li>
+				<li id="t-permalink"><a href="/church/w/index.php?title=File:Poisson_distribution_PMF.png&amp;oldid=693" title="Permanent link to this revision of the page">Permanent link</a></li>
+			</ul>
+		</div>
+	</div>
+</div><!-- end of the left (by default at least) column -->
+<div class="visualClear"></div>
+<div id="footer">
+	<div id="f-poweredbyico">
+		<a href="//www.mediawiki.org/"><img src="/church/w/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+	</div>
+	<ul id="f-list">
+		<li id="lastmod"> This page was last modified on 18 October 2009, at 19:06.</li>
+		<li id="viewcount">This page has been accessed 760 times.</li>
+		<li id="privacy"><a href="/church/wiki/Church_Wiki:Privacy_policy" title="Church Wiki:Privacy policy">Privacy policy</a></li>
+		<li id="about"><a href="/church/wiki/Church_Wiki:About" title="Church Wiki:About">About Church Wiki</a></li>
+		<li id="disclaimer"><a href="/church/wiki/Church_Wiki:General_disclaimer" title="Church Wiki:General disclaimer">Disclaimers</a></li>
+	</ul>
+</div>
+</div>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.user","mediawiki.page.ready"], null, true);
+}</script>
+<script src="http://projects.csail.mit.edu/church/w/load.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=monobook&amp;*"></script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-252335-10");
+pageTracker._trackPageview();
+</script><!-- Served in 0.736 secs. --></body></html>

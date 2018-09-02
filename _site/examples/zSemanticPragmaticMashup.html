@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Pragmatic inference based on compositional semantic meanings</title>
+
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/node_modules/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="/node_modules/codemirror/theme/neat.css">
+    <link rel="stylesheet" href="/assets/css/katex.min.css">
+    <link rel="stylesheet" href="/assets/css/custom.css">
+    <link rel="stylesheet" href="/assets/css/code.css">
+
+    <script src="/assets/js/webchurch.min.js"></script>
+    <script src="/assets/js/katex.min.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/node_modules/codemirror/lib/codemirror.js"></script>
+    <script src="/node_modules/codemirror/mode/javascript/javascript.js"></script>
+    <script src="/assets/js/cm-folding.js"></script>
+    <script src="/assets/js/cm-comments.js"></script>
+    <script src="/assets/js/webppl.min.js"></script>
+    <script src="/bower_components/jquery-autosize/jquery.autosize.min.js"></script>
+    <script src="/bower_components/d3/d3.min.js"></script>
+    <script src="/bower_components/vega/vega.min.js"></script>
+    <!-- <script src="https://probmods.org/webchurch/online/vega.min.js"></script> -->
+    <script src="/bower_components/underscore/underscore.js"></script>
+    <script src="/bower_components/react/JSXTransformer.js"></script>
+    <script src="/bower_components/react/react-with-addons.min.js"></script>
+    <script src="/bower_components/showdown/compressed/showdown.js"></script>
+    <script src="/assets/js/custom.js"></script>
+    <script type="text/jsx" src="/assets/js/editor.js"></script>
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Computational Phonology and Morphology</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right collapse navbar-collapse">
+            <li><a href="/editor.html">Editor</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="container">
+
+      <div class="page-header">
+  <h1>Pragmatic inference based on compositional semantic meanings</h1>
+</div>
+
+<p>This model combines and extends the <a href="pragmatics.html">pragmatics</a> and <a href="semanticparsing.html">semantic parsing</a> examples.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var makeObj = function() {
+  return {blond: flip(0.5), nice: flip(0.5), tall: flip(0.5)}
+}
+
+var worldPrior = function(nObjLeft, meaningFn, worldSoFar, prevFactor) {
+  var worldSoFar = worldSoFar==undefined ? [] : worldSoFar
+  var prevFactor = prevFactor==undefined ? 0 : prevFactor
+  if(nObjLeft==0) {
+    factor(-prevFactor)
+    return worldSoFar
+  } else {
+    var newObj = makeObj()
+    var newWorld = worldSoFar.concat([newObj])
+    var newFactor = meaningFn(newWorld)?0:-100
+    factor(newFactor - prevFactor)
+    return worldPrior(nObjLeft-1, meaningFn, newWorld, newFactor)
+  }
+}
+
+
+////////////////
+
+var meaning = function(utterance) {
+  return combine_meanings(filter(function(m){return !(m.sem==undefined)},
+                          map(lexical_meaning, utterance.split(" "))))
+}
+
+var lexical_meaning = function(word) {
+
+  var wordMeanings = {
+
+    "blond" : {
+    sem: function(world){return function(obj){return obj.blond}},
+      syn: {dir:'L', int:'NP', out:'S'} },
+
+    "nice" : {
+    sem: function(world){return function(obj){return obj.nice}},
+      syn: {dir:'L', int:'NP', out:'S'} },
+
+    "tall" : {
+    sem: function(world){return function(obj){return obj.tall}},
+      syn: {dir:'L', int:'NP', out:'S'} },
+
+    "Bob" : {
+    sem: function(world){return find(function(obj){return obj.name=="Bob"}, world)},
+      syn: 'NP' },
+
+    "some" : {
+    sem: function(world){return function(P){return function(Q){return filter(Q, filter(P, world)).length&gt;0}}},
+    syn: {dir:'R',
+    int:{dir:'L', int:'NP', out:'S'},
+    out:{dir:'R',
+    int:{dir:'L', int:'NP', out:'S'},
+      out:'S'}} },
+
+    "all" : {
+    sem: function(world){return function(P){return function(Q){return filter(neg(Q), filter(P, world)).length==0}}},
+    syn: {dir:'R',
+    int:{dir:'L', int:'NP', out:'S'},
+    out:{dir:'R',
+    int:{dir:'L', int:'NP', out:'S'},
+      out:'S'}} },
+
+    "none" : {
+    sem: function(world){return function(P){return function(Q){return filter(Q, filter(P, world)).length==0}}},
+    syn: {dir:'R',
+    int:{dir:'L', int:'NP', out:'S'},
+    out:{dir:'R',
+    int:{dir:'L', int:'NP', out:'S'},
+      out:'S'}} }
+  }
+
+  var meaning = wordMeanings[word];
+  return meaning == undefined?{sem: undefined, syn: ''}:meaning;
+}
+
+var neg = function(Q){
+  return function(x){return !Q(x)}
+}
+
+
+//assume that both f and a will give their actual semantic value after being applied to a world. make a new meaning that passes on world arg.
+var applyWorldPassing = function(f,a) {
+  return function(w){return f(w)(a(w))}
+}
+
+var combine_meaning = function(meanings) {
+  var possibleComb = canApply(meanings,0)
+  var i = possibleComb[randomInteger(possibleComb.length)]
+  var s = meanings[i].syn
+  if (s.dir == 'L') {
+    var f = meanings[i].sem
+    var a = meanings[i-1].sem
+    var newmeaning = {sem: applyWorldPassing(f,a), syn: s.out}
+    return meanings.slice(0,i-1).concat([newmeaning]).concat(meanings.slice(i+1))
+  }
+  if (s.dir == 'R') {
+    var f = meanings[i].sem
+    var a = meanings[i+1].sem
+    var newmeaning = {sem: applyWorldPassing(f,a), syn: s.out}
+    return meanings.slice(0,i).concat([newmeaning]).concat(meanings.slice(i+2))
+  }
+}
+
+//make a list of the indexes that can (syntactically) apply.
+var canApply = function(meanings,i) {
+  if(i==meanings.length){
+    return []
+  }
+  var s = meanings[i].syn
+  if (s.hasOwnProperty('dir')){ //a functor
+    var a = ((s.dir == 'L')?syntaxMatch(s.int, meanings[i-1].syn):false) |
+    ((s.dir == 'R')?syntaxMatch(s.int, meanings[i+1].syn):false)
+    if(a){return [i].concat(canApply(meanings,i+1))}
+  }
+  return canApply(meanings,i+1)
+}
+
+
+// The syntaxMatch function is a simple recursion to
+// check if two syntactic types are equal.
+var syntaxMatch = function(s,t) {
+  return !s.hasOwnProperty('dir') ? s==t :
+  s.dir==t.dir &amp; syntaxMatch(s.int,t.int) &amp; syntaxMatch(s.out,t.out)
+}
+
+
+// Recursively do the above until only one meaning is
+// left, return it's semantics.
+var combine_meanings = function(meanings){
+  return meanings.length==1 ? meanings[0].sem : combine_meanings(combine_meaning(meanings))
+}
+
+
+//////////////
+
+var utterancePrior = function() {
+  var utterances = ["some of the blond people are nice",
+                    "all of the blond people are nice",
+                    "none of the blond people are nice"]
+  var i = randomInteger(utterances.length)
+  return utterances[i]
+}
+
+
+//////////////
+
+var isall = function(world){return world.length==0 ?1: (world[0].blond?world[0].nice:1)&amp;isall(world.slice(1))}
+
+var literalListener = cache(function(utterance) {
+  Enumerate(function(){
+            var m = meaning(utterance)
+            var world = worldPrior(2,m)
+            factor(m(world)?0:-Infinity)
+            return world
+            }, 100)
+})
+
+var speaker = cache(function(world) {
+  Enumerate(function(){
+    var utterance = utterancePrior()
+    var L = literalListener(utterance)
+    factor(L.score([],world))
+    return utterance
+  }, 100)
+})
+
+
+var listener = function(utterance) {
+  Enumerate(function(){
+    var world = worldPrior(2, function(w){return 1}) //use vacuous meaning to avoid any guide...
+//    var world = worldPrior(2, meaning(utterance)) //guide by literal meaning
+    var S = speaker(world)
+    factor(S.score([],utterance))
+    return isall(world)
+  }, 100)
+}
+
+// literalListener("some of the blond people are nice")
+// speaker([{blond: true, nice: true, tall: false}])
+
+print(listener("some of the blond people are nice"))
+</code></pre>
+</div>
+
+
+
+    </div><!-- /.container -->
+
+  </body>
+</html>

@@ -1,0 +1,36 @@
+{
+  "name": "vega",
+  "version": "1.4.1",
+  "main": "vega.js",
+  "scripts": [
+    "vega.js"
+  ],
+  "ignore": [
+    ".DS_Store",
+    ".git",
+    ".gitignore",
+    ".npmignore",
+    "Makefile",
+    "bin",
+    "examples",
+    "index.js",
+    "node_modules",
+    "package.json",
+    "src",
+    "test"
+  ],
+  "dependencies": {
+    "d3": "3.4.10"
+  },
+  "homepage": "https://github.com/vega/vega",
+  "_release": "1.4.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.4.1",
+    "commit": "ec0c7b863175cd71426eac5777efc02b021f2a33"
+  },
+  "_source": "git://github.com/vega/vega.git",
+  "_target": "1.4.1",
+  "_originalSource": "vega",
+  "_direct": true
+}

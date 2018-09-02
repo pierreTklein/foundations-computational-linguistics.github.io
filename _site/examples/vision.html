@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Computer vision</title>
+
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/node_modules/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="/node_modules/codemirror/theme/neat.css">
+    <link rel="stylesheet" href="/assets/css/katex.min.css">
+    <link rel="stylesheet" href="/assets/css/custom.css">
+    <link rel="stylesheet" href="/assets/css/code.css">
+
+    <script src="/assets/js/webchurch.min.js"></script>
+    <script src="/assets/js/katex.min.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/node_modules/codemirror/lib/codemirror.js"></script>
+    <script src="/node_modules/codemirror/mode/javascript/javascript.js"></script>
+    <script src="/assets/js/cm-folding.js"></script>
+    <script src="/assets/js/cm-comments.js"></script>
+    <script src="/assets/js/webppl.min.js"></script>
+    <script src="/bower_components/jquery-autosize/jquery.autosize.min.js"></script>
+    <script src="/bower_components/d3/d3.min.js"></script>
+    <script src="/bower_components/vega/vega.min.js"></script>
+    <!-- <script src="https://probmods.org/webchurch/online/vega.min.js"></script> -->
+    <script src="/bower_components/underscore/underscore.js"></script>
+    <script src="/bower_components/react/JSXTransformer.js"></script>
+    <script src="/bower_components/react/react-with-addons.min.js"></script>
+    <script src="/bower_components/showdown/compressed/showdown.js"></script>
+    <script src="/assets/js/custom.js"></script>
+    <script type="text/jsx" src="/assets/js/editor.js"></script>
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Computational Phonology and Morphology</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right collapse navbar-collapse">
+            <li><a href="/editor.html">Editor</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="container">
+
+      <div class="page-header">
+  <h1>Computer vision</h1>
+</div>
+
+<p>Drawing a line:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var myDraw = Draw(200, 200, true);
+var x1 = randomInteger(200);
+var y1 = randomInteger(200);
+var x2 = randomInteger(200);
+var y2 = randomInteger(200);
+myDraw.line(x1, y1, x2, y2);
+</code></pre>
+</div>
+
+<p>Drawing many lines:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var myDraw = Draw(200, 200, true);
+
+var makeLines = function(n, xs){
+  var x1 = randomInteger(200);
+  var y1 = randomInteger(200);
+  var x2 = randomInteger(200);
+  var y2 = randomInteger(200);
+  var xs2 = xs.concat([[x1, y1, x2, y2]]);
+  return (n==0) ? xs : makeLines(n-1, xs2);
+}
+
+var drawLines = function(lines){
+  var line = lines[0];
+  myDraw.line(line[0], line[1], line[2], line[3]);
+  if (lines.length &gt; 1) {
+    drawLines(lines.slice(1));
+  }
+}
+
+var lines = makeLines(20, []);
+
+drawLines(lines);
+</code></pre>
+</div>
+
+<p>Loading images:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var myDraw1 = Draw(200, 200, true);
+loadImage(myDraw1, "/assets/img/the_scream.jpg");
+
+var myDraw2 = Draw(200, 200, true);
+loadImage(myDraw2, "/assets/img/box.png");
+</code></pre>
+</div>
+
+<p>Computing the pixel-by-pixel distance between two images:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var myDraw1 = Draw(200, 200, false);
+loadImage(myDraw1, "/assets/img/the_scream.jpg");
+
+var myDraw2 = Draw(200, 200, false);
+loadImage(myDraw2, "/assets/img/box.png");
+
+myDraw1.distance(myDraw2);
+</code></pre>
+</div>
+
+<p>Target image:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var targetImage = Draw(50, 50, true);
+loadImage(targetImage, "/assets/img/box.png")
+</code></pre>
+</div>
+
+<p>Inferring lines that match the target image:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var targetImage = Draw(50, 50, false);
+loadImage(targetImage, "/assets/img/box.png")
+
+var drawLines = function(drawObj, lines){
+  var line = lines[0];
+  drawObj.line(line[0], line[1], line[2], line[3]);
+  if (lines.length &gt; 1) {
+    drawLines(drawObj, lines.slice(1));
+  }
+}
+
+var makeLines = function(n, lines, prevScore){
+  // Add a random line to the set of lines
+  var x1 = randomInteger(50);
+  var y1 = randomInteger(50);
+  var x2 = randomInteger(50);
+  var y2 = randomInteger(50);
+  var newLines = lines.concat([[x1, y1, x2, y2]]);
+  // Compute image from set of lines
+  var generatedImage = Draw(50, 50, false);
+  drawLines(generatedImage, newLines);
+  // Factor prefers images that are close to target image
+  var newScore = -targetImage.distance(generatedImage)/1000; // Increase to 10000 to see more diverse samples
+  factor(newScore - prevScore);
+  generatedImage.destroy();
+  // Generate remaining lines (unless done)
+  return (n==1) ? newLines : makeLines(n-1, newLines, newScore);
+}
+
+ParticleFilter(
+  function(){
+    var lines = makeLines(4, [], 0);
+    var finalGeneratedImage = Draw(50, 50, true);
+	drawLines(finalGeneratedImage, lines);
+   }, 100)
+</code></pre>
+</div>
+
+<p>Inference using MCMC and with a model that can manipulate opacity and stroke width:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>///fold:
+var targetImage = Draw(50, 50, false);
+loadImage(targetImage, "/assets/img/box.png")
+
+var uniformDraw = function(xs){
+  var i = randomInteger(xs.length);
+  return xs[i];
+}
+
+var drawLines = function(drawObj, lines){
+  var line = lines[0];
+  drawObj.line(line[0], line[1], line[2], line[3], line[4], line[5]);
+  if (lines.length &gt; 1) {
+    drawLines(drawObj, lines.slice(1));
+  }
+}
+
+var randomStrokeWidth = function(){
+  var widths = [2, 4, 8, 16];
+  return uniformDraw(widths);
+}
+
+var randomOpacity = function(){
+  var opacities = [0, .5];
+  return uniformDraw(opacities);
+}
+
+var makeLines = function(n, lines){
+  var x1 = randomInteger(50);
+  var y1 = randomInteger(50);
+  var x2 = randomInteger(50);
+  var y2 = randomInteger(50);
+  var strokeWidth = randomStrokeWidth();
+  var opacity = randomOpacity();
+  var newLines = lines.concat([[x1, y1, x2, y2, strokeWidth, opacity]]);
+  return (n==1) ? newLines : makeLines(n-1, newLines);
+}
+
+var finalImgSampler = MH(
+  function(){
+    var lines = makeLines(4, []);
+    var finalGeneratedImage = Draw(50, 50, true);
+    drawLines(finalGeneratedImage, lines);
+    var newScore = -targetImage.distance(finalGeneratedImage)/1000; // Increase to 10000 to see more diverse samples
+    factor(newScore);
+    // print(newScore);
+    return lines
+   }, 1000)
+///
+
+var finalImage = Draw(100, 100, false);
+var finalLines = sample(finalImgSampler);
+drawLines(finalImage, finalLines);
+</code></pre>
+</div>
+
+<p>A more colorful target image:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var targetImage = Draw(50, 50, true);
+loadImage(targetImage, "/assets/img/beach.png")
+</code></pre>
+</div>
+
+<p>A richer image prior:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>///fold:
+var targetImage = Draw(50, 50, false);
+loadImage(targetImage, "/assets/img/beach.png")
+
+var uniformDraw = function(xs){
+  var i = randomInteger(xs.length);
+  return xs[i];
+}
+
+var drawLines = function(drawObj, lines){
+  var line = lines[0];
+  drawObj.line(line[0], line[1], line[2], line[3], line[4], line[5], line[6]);
+  if (lines.length &gt; 1) {
+    drawLines(drawObj, lines.slice(1));
+  }
+}
+
+var randomStrokeWidth = function(){
+  var widths = [2, 4, 8, 16];
+  return uniformDraw(widths);
+}
+
+var randomOpacity = function(){
+  var opacities = [0, 0.2, .5];
+  return uniformDraw(opacities);
+}
+
+var _getRandomColor = function(i) {
+  if (i == 0){
+    return "";
+  } else {
+    // var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    return uniformDraw('04AF') + _getRandomColor(i-1);
+  }
+}
+
+var randomColor = function(){
+  return "#" + _getRandomColor(6);
+}
+
+var makeLines = function(n, lines){
+  var x1 = randomInteger(50);
+  var y1 = randomInteger(50);
+  var x2 = randomInteger(50);
+  var y2 = y1;
+  var strokeWidth = randomStrokeWidth();
+  var opacity = randomOpacity();
+  var color = randomColor();
+  var newLines = lines.concat([[x1, y1, x2, y2, strokeWidth, opacity, color]]);
+  return (n==1) ? newLines : makeLines(n-1, newLines);
+}
+///
+
+var counter = [];
+
+MH(
+  function(){
+    var lines = makeLines(8, []);
+    
+
+    var showOutputImage = (counter.length % 100 == 0);
+    var finalGeneratedImage = Draw(50, 50, showOutputImage);
+
+    drawLines(finalGeneratedImage, lines);
+    var newScore = -targetImage.distance(finalGeneratedImage)/1000; // Increase to 10000 to see more diverse samples
+    factor(newScore);
+    
+    if (!showOutputImage) {
+      finalGeneratedImage.destroy()
+    }
+    
+    counter.push(1);
+    
+    return lines
+   }, 2500);
+
+// show target image for comparison
+loadImage(Draw(50, 50, true), "/assets/img/beach.png")
+</code></pre>
+</div>
+
+
+
+    </div><!-- /.container -->
+
+  </body>
+</html>

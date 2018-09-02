@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Metropolis Hastings and Gibbs Sampling</title>
+
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/node_modules/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="/node_modules/codemirror/theme/neat.css">
+    <link rel="stylesheet" href="/assets/css/katex.min.css">
+    <link rel="stylesheet" href="/assets/css/custom.css">
+    <link rel="stylesheet" href="/assets/css/code.css">
+
+    <script src="/assets/js/webchurch.min.js"></script>
+    <script src="/assets/js/katex.min.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/node_modules/codemirror/lib/codemirror.js"></script>
+    <script src="/node_modules/codemirror/mode/javascript/javascript.js"></script>
+    <script src="/assets/js/cm-folding.js"></script>
+    <script src="/assets/js/cm-comments.js"></script>
+    <script src="/assets/js/webppl.min.js"></script>
+    <script src="/bower_components/jquery-autosize/jquery.autosize.min.js"></script>
+    <script src="/bower_components/d3/d3.min.js"></script>
+    <script src="/bower_components/vega/vega.min.js"></script>
+    <!-- <script src="https://probmods.org/webchurch/online/vega.min.js"></script> -->
+    <script src="/bower_components/underscore/underscore.js"></script>
+    <script src="/bower_components/react/JSXTransformer.js"></script>
+    <script src="/bower_components/react/react-with-addons.min.js"></script>
+    <script src="/bower_components/showdown/compressed/showdown.js"></script>
+    <script src="/assets/js/custom.js"></script>
+    <script type="text/jsx" src="/assets/js/editor.js"></script>
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Computational Phonology and Morphology</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right collapse navbar-collapse">
+            <li><a href="/editor.html">Editor</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="container">
+
+      <div class="page-header">
+  <h1>Metropolis Hastings and Gibbs Sampling</h1>
+</div>
+
+<h1 id="problem-set">Problem Set</h1>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(define get-phone-mean (mem (lambda (phone)  (gaussian 0.0 1.0) )))
+(define get-phone-variance (mem (lambda (phone)  1.0)))
+
+(define (sample-phone)
+  (DPmem 1.0 gensym))
+
+(define sample-morpheme
+  (DPmem 1.0
+         (lambda ()
+           (map (lambda (phone)
+                  (gaussian (get-phone-mean phone)
+                            (get-phone-variance phone)))
+                  (repeat (poisson 5.0) sample-phone)))))
+
+(sample-morpheme)
+</code></pre>
+</div>
+
+<h1 id="using-metropolis-hastings">Using Metropolis Hastings</h1>
+
+<p>Metropolis Hastings is a general method for defining a Markov chain
+whose stationary distribution is some target distribution <script type="math/tex">p(x)</script>
+using some <em>proposal distribution</em> <script type="math/tex">q(x \rightarrow x')</script> defining a
+transition on the support of <script type="math/tex">p</script>. We can use any proposal
+distribution we like, so long as it is reaches the entire support of
+<script type="math/tex">p(x)</script>. Note that we only need to be able to compute <script type="math/tex">p(x)</script> up to
+a normalizing constant. That is, we don’t need to be able to sample
+from it, only to evaluate it (up to a constant) at any state <script type="math/tex">x</script>. By
+contrast, the proposal distribution <script type="math/tex">q(x \rightarrow x')</script>—sometimes
+written <script type="math/tex">q(x'|x)</script>—needs to be sampleable.</p>
+
+<p>Metropolis-Hastings works in two steps. First, we draw a new state
+<script type="math/tex">x'</script> from <script type="math/tex">q(x'|x)</script> then this is state is either <em>accepted</em> with
+probability <script type="math/tex">A(x \rightarrow x')=\min\left(1,
+\frac{p(x')q(x'\rightarrow x)}{p(x)q(x\rightarrow x')}\right)</script>,
+otherwise it is <em>rejected</em> and we remain in state <script type="math/tex">x</script>. Crucially, to
+use Metropolis-Hastings we must be able to compute <script type="math/tex">A(x \rightarrow
+x')</script> which includes not only the <em>proposal probability</em>
+<script type="math/tex">q(x\rightarrow x')</script> but also the <em>reverse probability</em>
+<script type="math/tex">q(x'\rightarrow x)</script>. In practice, this latter quantity can
+sometimes be quite hard to compute since it must include every
+possible path from <script type="math/tex">x' \rightarrow x</script> under the proposal
+distribution <script type="math/tex">q</script>.</p>
+
+<p>Let’s assume we have a sequence of correlated observations drawn from
+a two-dimensional Gaussian distribution. <script type="math/tex">x_i, y_i | \rho \sim
+\mathrm{GAUSS}(\mu, \Sigma)</script></p>
+
+<h1 id="sampling-for-the-infinite-gaussian-mixture-model">Sampling for the Infinite Gaussian Mixture Model</h1>
+
+<p>Now consider a more complex case: inference for a Dirichlet Process
+distributed infinite mixture of Gaussians after observing some
+datapoints.</p>
+
+<p><img src="images/mef.png" width="300" /></p>
+
+<p>Our observations consist of a set of <script type="math/tex">N</script> real valued vectors
+<script type="math/tex">y^{(i)}</script>. The latent parameters we need to sample are (i) the
+seating arrangement of <script type="math/tex">N</script> customers in the Dirichlet process and
+the Gaussian parameters associated with each table in the
+restaurant. Obviously, there are many different seating arrangements
+over <script type="math/tex">N</script> customers (actually this number grows like the so-called
+<a href="https://en.wikipedia.org/wiki/Bell_number">Bell numbers</a>). There are
+also uncountably (continuously many) possible means and variances
+associated with each table. Our goal is to define a proposal
+distribution that makes small changes to a particular seating
+arrangment and then use Metropolis-Hastings to turn it into a sampler
+for the <em>posterior distribution</em> over seating arrangements and table
+parameters.</p>
+
+<p>The idea we are going to use is that is is possible to reseat just one
+customer at a time (i.e., just generate one datapoint at a
+time). Because the Dirichlet process is <em>exchangeable</em> we can treat
+any observation as if it was the most recent observation. So the idea
+is (i) choose an observation, (ii) remove it from the restaurant (iii)
+sample a table for it as if it was the next observation sampled (iv)
+use Metropolis-Hastings to accept or reject the sample.</p>
+
+<p>Note that this proposal makes use of the <em>posterior predictive</em>
+distribution to sample proposals. In other words, it resamples one
+datapoint from the conditional posterior, keeping all of the other
+datapoints fixed. This is a very common way to implement an MCMC
+algorithm and is a special case of MH known as <em>Gibbs sampling</em>. One
+advantage of Gibbs sampling is that, because you are sampling from a
+(partial) posterior, you always accept according to the MH
+criterion. To see this note that (unnormalized) probability of
+observing <script type="math/tex">N</script> values with some seating arrangement and table labels is:</p>
+
+<script type="math/tex; mode=display">\frac{1}{1+\alpha} p(y^{(1)} | \mu_{z_1}, \sigma^{2}_{z_1})
+p(\mu_{z_1}, \sigma^{2}_{z_1}) \times ... \times \frac{n_{z_{(N-1)}}}{1+\alpha} p(y^{(N-1)} | \mu_{z_{(N-1)}}, \sigma^{2}_{z_{(N-1)}})</script>
+
+<p>The posterior probability if this state is just this value divided by
+a constant <script type="math/tex">C</script>. So our target distribution, the posterior, is just
+proportional to the prior. Our proposal distribution is also just the
+posterior predictive, and our reverse probability is just given by the
+possibility that we resample the <em>same table</em> as before in the
+restaurant. Thus, all the terms in the MH criteria cancel and equal <script type="math/tex">1</script>.</p>
+
+<p>add_observation(obs_id, obs_value, table)
+remove_observation(obs_id)
+posterior_predictive(obs_value, table)
+score()</p>
+
+<!--
+The probability of a particular CRP partition can also be written down
+in closed form as follows.
+$$P(\vec{y})=\frac{\alpha^{K}\Gamma[\alpha]\prod_{j=0}^{K}\Gamma[y_{j}]}{\Gamma[\alpha+\sum_{j=0}^{K}y_{j}]}$$
+Where $$\vec{y}$$ is the vector of counts of customers at each table and
+$$\Gamma(\cdot)$$ is the gamma function, a continuous generalization of
+the factorial function. This shows that for a CRP the vector of counts
+is sufficient.
+-->
+
+
+
+
+    </div><!-- /.container -->
+
+  </body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Inferring a binomial rate</title>
+
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/node_modules/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="/node_modules/codemirror/theme/neat.css">
+    <link rel="stylesheet" href="/assets/css/katex.min.css">
+    <link rel="stylesheet" href="/assets/css/custom.css">
+    <link rel="stylesheet" href="/assets/css/code.css">
+
+    <script src="/assets/js/webchurch.min.js"></script>
+    <script src="/assets/js/katex.min.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/node_modules/codemirror/lib/codemirror.js"></script>
+    <script src="/node_modules/codemirror/mode/javascript/javascript.js"></script>
+    <script src="/assets/js/cm-folding.js"></script>
+    <script src="/assets/js/cm-comments.js"></script>
+    <script src="/assets/js/webppl.min.js"></script>
+    <script src="/bower_components/jquery-autosize/jquery.autosize.min.js"></script>
+    <script src="/bower_components/d3/d3.min.js"></script>
+    <script src="/bower_components/vega/vega.min.js"></script>
+    <!-- <script src="https://probmods.org/webchurch/online/vega.min.js"></script> -->
+    <script src="/bower_components/underscore/underscore.js"></script>
+    <script src="/bower_components/react/JSXTransformer.js"></script>
+    <script src="/bower_components/react/react-with-addons.min.js"></script>
+    <script src="/bower_components/showdown/compressed/showdown.js"></script>
+    <script src="/assets/js/custom.js"></script>
+    <script type="text/jsx" src="/assets/js/editor.js"></script>
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Computational Phonology and Morphology</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right collapse navbar-collapse">
+            <li><a href="/editor.html">Editor</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="container">
+
+      <div class="page-header">
+  <h1>Inferring a binomial rate</h1>
+</div>
+
+<p>Observe 4 heads in 8 coin flips:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>///fold:
+var sum = function(xs){
+  if (xs.length == 0) {
+    return 0;
+  } else {
+    return xs[0] + sum(xs.slice(1));
+  }
+};
+
+var makeBinomial = function(n, p){
+  return Enumerate(
+    function(){
+      return sum(repeat(n, function(){return flip(p)}));
+    });
+}
+
+var uniformChoice = function(xs){
+  return xs[randomInteger(xs.length)];
+}
+
+var observe = function(erp, value){
+  erpFactor(erp, [], value);
+}
+///
+
+var model1 = function(){
+  var p = uniformChoice([.3, .5, .7]);
+  var binomial = makeBinomial(8, p);
+  observe(binomial, 4);
+  return p;
+}
+
+print(Enumerate(model1))
+</code></pre>
+</div>
+
+<p>Observe 2 heads in 4 coin flips, twice:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>///fold:
+var sum = function(xs){
+  if (xs.length == 0) {
+    return 0;
+  } else {
+    return xs[0] + sum(xs.slice(1));
+  }
+};
+
+var makeBinomial = function(n, p){
+  return Enumerate(
+    function(){
+      return sum(repeat(n, function(){return flip(p)}));
+    });
+}
+
+var uniformChoice = function(xs){
+  return xs[randomInteger(xs.length)];
+}
+
+var observe = function(erp, value){
+  erpFactor(erp, [], value);
+}
+///
+
+var model2 = function(){
+  var p = uniformChoice([.3, .5, .7]);
+  var binomial1 = makeBinomial(4, p);
+  var binomial2 = makeBinomial(4, p);
+  observe(binomial1, 2);
+  observe(binomial2, 2);
+  return p;
+}
+
+
+print(Enumerate(model2))
+</code></pre>
+</div>
+
+
+
+    </div><!-- /.container -->
+
+  </body>
+</html>
