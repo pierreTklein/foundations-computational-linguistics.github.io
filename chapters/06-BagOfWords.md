@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: hidden
 title: 6 Bag of Words Models
 ---
 

@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: hidden
 title: 5 Random Variables
 ---
 

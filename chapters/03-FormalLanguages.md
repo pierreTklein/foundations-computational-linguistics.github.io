@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: hidden
 title: 3 Formal Languages
 ---
 

@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: hidden
 title: 7 N-gram Models
 ---
 

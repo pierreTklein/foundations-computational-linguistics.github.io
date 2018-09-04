@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: hidden
 title: 4 Generative Models
 ---
 
