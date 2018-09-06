@@ -116,7 +116,7 @@ All expressions and values in LISP have a type. In this section, we discuss some
 
 ### Symbols
 
-Above, we discussed vairables. A variable is named location in memory that stores some value for us. The kinds of things that can be the names of variables in LISP are a special datatype known as a *symbol*.  Whenever the Clojure interpreter encounters an expression which is of type symbol, it assumes it is the name for a variable and tries to evaluate the symbol by looking up the value stored with the variable. That is, symbols evaluate to the value bound to the variable with that name. If the variable has not been bound to value, you will get a special value in Clojure called <tt>nil</tt> which is Clojure's way of referring to "nothing."
+Above, we discussed variables. A variable is named location in memory that stores some value for us. The kinds of things that can be the names of variables in LISP are a special datatype known as a *symbol*.  Whenever the Clojure interpreter encounters an expression which is of type symbol, it assumes it is the name for a variable and tries to evaluate the symbol by looking up the value stored with the variable. That is, symbols evaluate to the value bound to the variable with that name. If the variable has not been bound to value, you will get a special value in Clojure called <tt>nil</tt> which is Clojure's way of referring to "nothing."
 
 <br/>
 ```
